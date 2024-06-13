@@ -1,0 +1,17 @@
+int constant OP_INCREMENT = 1;
+int counter = 0;
+
+// Function to increment the counter
+() recv_internal(int msg_value, cell in_msg, slice in_slice) impure {
+    ;; Only increment if the operation code matches
+    if (in_slice~load_uint(32) == OP_INCREMENT) {
+        counter = counter + 1;
+    }
+    ;; Return the current counter value
+    int counter_value = counter;
+    return ();
+}
+
+int get_counter() method_id {
+    return counter;
+}
